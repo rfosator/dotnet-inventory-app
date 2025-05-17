@@ -3,25 +3,28 @@
 @{
 }
 
+
 <table class="table">
     <thead>
         <tr>
             <th>Name</th>
             <th>Description</th>
+            <th>Price</th>
+            <th>Creation Date</th>
             <th>Last Updated</th>
-            <th>In Stock</th>
-            <th></th>
+            <th><a asp-page="Add">Agregar</a></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Strings) 
+        @foreach (var item in Model.Products)
         {
             <tr>
-                <td>-</td>
-                <td>-</td>
-                <td>@DateTime.Now.ToString()</td>
-                <td>@item.Stock</td>
-                <td><a asp-page="Item" asp-route-id="@item.Id">View</a></td>
+                <td>@item.Name</td>
+                <td>@(item.Description ?? "-")</td>
+                <td>@item.Price</td>
+                <td>@item.CreatedAt</td>
+                <td>@item?.LastUpdated</td>
+                <td><a asp-page="Item" asp-route-id="@item?.Id">Editar</a></td>
             </tr>
         }
     </tbody>

@@ -1,32 +1,32 @@
+using System.Threading.Tasks;
+using Infrastructure.Data;
+using Infrastructure.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApp.Pages.Catalog
 {
     public class CatalogItemModel
     {
-        public string Id { get; set; } = null!;
+        public int Id { get; set; }
         public string Name { get; set; } = null!;
+        public double Price { get; set; }
         public string? Description { get; set; }
-        public int Stock { get; set; }
+        public DateTime CreationDate { get; set; }
+        public DateTime? LastUpdated { get; set; }
     }
 
     public class IndexModel : PageModel
     {
-        public IEnumerable<CatalogItemModel> Strings = [];
+        public IEnumerable<CatalogItemModel> Catalog = [];
 
-        public void OnGet()
+        [BindProperty]
+        public List<Product> Products { get; set; } = default!;
+
+        public async Task OnGet([FromServices] InventoryContext db)
         {
-            List<CatalogItemModel> list = [];
-            for (int i = 0; i < 10; i++)
-            {
-                list.Add(new CatalogItemModel
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Stock = Random.Shared.Next(60)
-                });
-            }
-            Strings = list;
+            Products = await db.Products.ToListAsync();
         }
     }
 }

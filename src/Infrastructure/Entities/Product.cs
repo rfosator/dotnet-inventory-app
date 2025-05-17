@@ -6,7 +6,7 @@ namespace Infrastructure.Entities;
 [Table("products")]
 public class Product
 {
-
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Key, Column("id")]
     public int Id { get; set; }
     [Column("name")]
@@ -16,11 +16,11 @@ public class Product
     [Column("price")]
     public double Price { get; set; }
     [Column("created_at")]
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.Now.ToUniversalTime();
     [Column("last_updated")]
     public DateTime LastUpdated { get; set; }
     [Column("category_id")]
-    public int CategoryId { get; set; }
+    public int? CategoryId { get; set; }
     
     [Column("category")]
     public virtual Category? Category { get; set; }
