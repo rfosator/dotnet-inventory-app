@@ -1,0 +1,12 @@
+﻿@page
+@model WebApp.Pages.Catalog.ItemModel
+@{
+}
+<a asp-page="Index">Back</a>
+<br><br>
+<dl>
+    <dt>Id</dt>
+    <dd>@Model.Id</dd>
+    <dt>Last Updated</dt>
+    <dd>@DateTime.Now.ToLongTimeString()</dd>
+</dl>
