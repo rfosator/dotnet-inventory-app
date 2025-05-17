@@ -1,7 +1,17 @@
+using Infrastructure.Data;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+var connectionString = builder.Configuration.GetConnectionString("Inventory") ??
+    throw new Exception("Databse connection string was not found.");
+
+builder.Services.AddDbContextPool<InventoryContext>(options =>
+    options.UseNpgsql(connectionString));
 
 var app = builder.Build();
 
